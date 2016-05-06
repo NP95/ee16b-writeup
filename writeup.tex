@@ -9,14 +9,15 @@
 \usepackage{verbatim}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{url}
 \usepackage[]{algorithm2e}
 \usepackage[T1]{fontenc}
 \newenvironment{proof}{\noindent{\bf Proof:} \hspace*{1mm}}{
-	\hspace*{\fill} $\Box$ }
+        \hspace*{\fill} $\Box$ }
 \newenvironment{proof_of}[1]{\noindent {\bf Proof of #1:}
-	\hspace*{1mm}}{\hspace*{\fill} $\Box$ }
+        \hspace*{1mm}}{\hspace*{\fill} $\Box$ }
 \newenvironment{proof_claim}{\begin{quotation} \noindent}{
-	\hspace*{\fill} $\diamond$ \end{quotation}}
+        \hspace*{\fill} $\diamond$ \end{quotation}}
 
 \newtheorem{thm}{Theorem}
 \newtheorem{lemma}[thm]{Lemma}
@@ -30,38 +31,66 @@
 \setcounter{tocdepth}{1}
 \newtheorem{theorem}{Theorem}
 \pagenumbering{gobble}
+
+\title{\textsc{EE16B} Final Project Writeup}
+\author{%
+        Christopher Branner-Augmon \\
+          \texttt{ee16b-amb}
+        \and
+        Ahmed Husain \\
+          \texttt{ee16b-amy}
+        \and
+        Peter Manohar \\
+          \texttt{ee16b-aif}
+        \and
+        Pratyush Mishra \\
+        \texttt{ee16b-aci}
+        \and
+        Amanda Tomlinson\\
+        \texttt{ee16b-amu}
+      }
+
 \begin{document}
+\maketitle
 \section*{PCA Classification}
 
-We tried to pick words that had distinct lengths and distinct vowel sounds. We
-figured that having these features would allow the PCA to classify well. We
-initially tried only varying the length of the words, but we found that it was
-hard to consistently fit in longer words in the recording interval. This lead
-to us trying to use vowel sounds as a way to choose words. We ended up settling
-on the words ``port'', ``halibut'', ``google'', and ``starboard''. 
+We tried to pick words that had distinct lengths and distinct vowel sounds.
 
-``Port'' was chosen because it was short, and ``starboard'' was chosen because
-it was long. We picked ``google'' and ``halibut'' to include a long ``o'' and
-short ``a'' sound. We also said each word in a very unusual way to ensure that
-the waveforms sampled would be very distinct, and our classification would
-therefore consistent. For example, when saying the word starboard, we added an
-inflection at the end of the word. Without this, our classification was not
-very accurate.  We used PCA to classify the data, and we got a distinct cluster
-for ``halibut'', ``google'', and ``starboard''. The points corresponding to
-``port'' were spread out, but did not interfere with the other clusters. 
+\paragraph{Words used.}
+We initially tried only varying the length of the words, but found that
+consistently fitting longer words in the short recording interval was difficult.
+So, to make make each word more distinct, we tried varying the length and sound
+of vowels in our words. After some experimentation, we settled on the words
+``port'', ``halibut'', ``google'', and ``starboard''.
 
-When we
-implemented the classification on the launchpad, we made a slight change in the
-algorithm.  Instead of outputting the word corresponding to the closest cluster
-within some uniform minimum distance, we set a minimum distance for each
-cluster individually. We did this because the spread of port's cluster was
-significantly higher than the other clusters. Without this change we were
-unable to classify port because the signal was rarely within the uniform
-minimum distance.
+We chose ``port'' because it was short, unlike all the other words.
+``Starboard'', on the other hand, is the longest of our words. To vary the
+vowels we used, we picked ``google'' and ``halibut'' to include a long ``o''
+and short ``a'' sound.
+
+We also said each word in a very unusual manner to emphasize differences, thus
+ensuring that the sampled waveforms would be clearly distinct.  This helped
+improve the consistency of our classification. For example, when saying the
+word starboard, we added an inflection (specifically, a rising ``ou'' sound) at
+the end of the word. Without this, our classification was not very accurate.
+
+We obtained distinct clusters for ``halibut'', ``google'', and ``starboard'',
+after projecting our data onto the principal components.  The data points
+corresponding to ``port'' were spread out, but did not interfere with the other
+clusters.
+
+When we implemented the k-means classification on the launchpad, we modified
+the algorithm slightly. Instead of using the same threshold distance for all
+the clusters, we set different threshold distances for each cluster. We did
+this because the cluster corresponding to ``port'' was significantly more spread out
+than the other clusters. Without this change we were unable to classify
+``port'' correctly, since the data point was rarely within the uniform minimum
+distance.
 
 \section*{What we learned}
 
 The project gave us a better understand of PCA and k-means. We also learned how
-to implement control systems, and struggled with debugging the car.
+to implement control systems, and struggled with debugging the car. Our demo is
+available at \url{https://www.youtube.com/watch?v=LVntcSF0hhY}.
 
 \end{document}
